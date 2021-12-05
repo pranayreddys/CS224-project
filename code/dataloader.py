@@ -330,7 +330,7 @@ class Loader(BasicDataset):
         return torch.sparse.FloatTensor(index, data, torch.Size(coo.shape))
         
     def getEdgeIndex(self):
-        return torch.tensor(np.stack([np.concatenate([self.trainUser, self.trainItem]), np.concatenate([self.trainItem, self.trainUser])])).to('cuda' if torch.cuda.is_available() else 'cpu')
+        return torch.tensor(np.stack([np.concatenate([self.trainUser, self.n_users + self.trainItem]), np.concatenate([self.n_users + self.trainItem, self.trainUser])])).to('cuda' if torch.cuda.is_available() else 'cpu')
 
     def getSparseGraph(self):
         print("loading adjacency matrix")
