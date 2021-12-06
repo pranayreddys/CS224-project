@@ -284,25 +284,6 @@ class LightGCN_PyG(BasicModel):
         print(f"lgn is already to go(dropout:{self.config['dropout']})")
 
         # print("save_txt")
-    def __dropout_x(self, x, keep_prob):
-        size = x.size()
-        index = x.indices().t()
-        values = x.values()
-        random_index = torch.rand(len(values)) + keep_prob
-        random_index = random_index.int().bool()
-        index = index[random_index]
-        values = values[random_index]/keep_prob
-        g = torch.sparse.FloatTensor(index.t(), values, size)
-        return g
-    
-    def __dropout(self, keep_prob):
-        if self.A_split:
-            graph = []
-            for g in self.Graph:
-                graph.append(self.__dropout_x(g, keep_prob))
-        else:
-            graph = self.__dropout_x(self.Graph, keep_prob)
-        return graph
     
     def computer(self):
         """
@@ -311,16 +292,6 @@ class LightGCN_PyG(BasicModel):
         users_emb = self.embedding_user.weight
         items_emb = self.embedding_item.weight
         all_emb = torch.cat([users_emb, items_emb])
-        #   torch.split(all_emb , [self.num_users, self.num_items])
-        # embs = [all_emb]
-        # if self.config['dropout']:
-        #     if self.training:
-        #         print("droping")
-        #         g_droped = self.__dropout(self.keep_prob)
-        #     else:
-        #         g_droped = self.Graph        
-        # else:
-        #     g_droped = self.Graph
         light_out = self.lgcn_network(all_emb, self.edge_index)
         users, items = torch.split(light_out, [self.num_users, self.num_items])
         return users, items

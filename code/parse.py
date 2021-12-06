@@ -29,7 +29,7 @@ def parse_args():
     parser.add_argument('--testbatch', type=int,default=100,
                         help="the batch size of users for testing")
     parser.add_argument('--dataset', type=str,default='gowalla',
-                        help="available datasets: [lastfm, gowalla, yelp2018, amazon-book]")
+                        help="available datasets: [lastfm, gowalla, yelp2018, amazon-book, uc]")
     parser.add_argument('--path', type=str,default="./checkpoints",
                         help="path to save weights")
     parser.add_argument('--topks', nargs='?',default="[20]",
@@ -42,5 +42,5 @@ def parse_args():
     parser.add_argument('--multicore', type=int, default=0, help='whether we use multiprocessing or not in test')
     parser.add_argument('--pretrain', type=int, default=0, help='whether we use pretrained weight or not')
     parser.add_argument('--seed', type=int, default=2020, help='random seed')
-    parser.add_argument('--model', type=str, default='pyg_lgn', help='rec-model, support [mf, lgn]')
+    parser.add_argument('--model', type=str, default='pyg_lgn', help='rec-model, support [mf, lgn, pyg_lgn]')
     return parser.parse_args()

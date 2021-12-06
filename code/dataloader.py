@@ -217,7 +217,7 @@ class LastFM(BasicDataset):
 class Loader(BasicDataset):
     """
     Dataset type for pytorch \n
-    Incldue graph information
+    Include graph information
     gowalla dataset
     """
 
@@ -242,14 +242,16 @@ class Loader(BasicDataset):
             for l in f.readlines():
                 if len(l) > 0:
                     l = l.strip('\n').split(' ')
-                    items = [int(i) for i in l[1:]]
+                    l = [i for i in l if i!=""]
                     uid = int(l[0])
-                    trainUniqueUsers.append(uid)
-                    trainUser.extend([uid] * len(items))
-                    trainItem.extend(items)
-                    self.m_item = max(self.m_item, max(items))
                     self.n_user = max(self.n_user, uid)
-                    self.traindataSize += len(items)
+                    if len(l) > 1:
+                        items = [int(i) for i in l[1:]]
+                        trainUniqueUsers.append(uid)
+                        trainUser.extend([uid] * len(items))
+                        trainItem.extend(items)
+                        self.m_item = max(self.m_item, max(items))
+                        self.traindataSize += len(items)
         self.trainUniqueUsers = np.array(trainUniqueUsers)
         self.trainUser = np.array(trainUser)
         self.trainItem = np.array(trainItem)
@@ -258,14 +260,16 @@ class Loader(BasicDataset):
             for l in f.readlines():
                 if len(l) > 0:
                     l = l.strip('\n').split(' ')
-                    items = [int(i) for i in l[1:]]
+                    l = [i for i in l if i!=""]
                     uid = int(l[0])
-                    testUniqueUsers.append(uid)
-                    testUser.extend([uid] * len(items))
-                    testItem.extend(items)
-                    self.m_item = max(self.m_item, max(items))
                     self.n_user = max(self.n_user, uid)
-                    self.testDataSize += len(items)
+                    if len(l) > 1:
+                        items = [int(i) for i in l[1:]]
+                        testUniqueUsers.append(uid)
+                        testUser.extend([uid] * len(items))
+                        testItem.extend(items)
+                        self.m_item = max(self.m_item, max(items))
+                        self.testDataSize += len(items)
         self.m_item += 1
         self.n_user += 1
         self.testUniqueUsers = np.array(testUniqueUsers)
