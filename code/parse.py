@@ -43,4 +43,4 @@ def parse_args():
     parser.add_argument('--pretrain', type=int, default=0, help='whether we use pretrained weight or not')
     parser.add_argument('--seed', type=int, default=2020, help='random seed')
     parser.add_argument('--model', type=str, default='pyg_lgn', help='rec-model, support [mf, lgn, pyg_lgn]')
-    return parser.parse_args()
+    return parser.parse_args([])

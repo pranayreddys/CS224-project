@@ -281,7 +281,7 @@ class LightGCN_PyG(BasicModel):
         self.f = nn.Sigmoid()
         self.lgcn_network = LGCN_Network(self.n_layers)
         self.edge_index = self.dataset.getEdgeIndex()
-        print(f"lgn is already to go(dropout:{self.config['dropout']})")
+        print(f"lgn is all ready to go(dropout:{self.config['dropout']})")
 
         # print("save_txt")
     
